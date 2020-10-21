@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -75,8 +76,9 @@ public class LibraryEventProducer {
 
     private ProducerRecord<Integer, String> buildProducerRecord(Integer key, String value, String topic) {
 
-
-        List<Header> recordHeaders = List.of(new RecordHeader("event-source", "scanner".getBytes()));
+        List<Header> recordHeaders = new ArrayList<>();
+        recordHeaders.add(new RecordHeader("event-source", "scanner".getBytes()));
+        //List<Header> recordHeaders = List.of(new RecordHeader("event-source", "scanner".getBytes()));
 
         return new ProducerRecord<>(topic, null, key, value, recordHeaders);
     }
